@@ -18,7 +18,7 @@
 
 
 
-<body>
+<body style="margin: 0px">
 
 
 
@@ -33,36 +33,6 @@
     <!-- React JS -->
 
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <div id="getcoords"
-        style="  display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0 0 0 / 87%);
-        align-content: center;
-        text-align: center "
-  >
-    <button
-    onclick="location.href='getcoords'"
-    id='getcoords'
-    type="button"
-        style="
-        background-color: #5c7000;
-        margin: 15% auto;
-        padding: 20px;
-        color: #fff;
-        border: 1px solid #085d07;
-        border-radius: 10px;
-        font-weight: 700;
-        width: 80%;">
-                    Сформировать GPS-координаты
-    </button>
-    </div>
 
 </body>
 
