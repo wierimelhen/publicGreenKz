@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "baseUrl": ".",
+        "noImplicitAny": true, // Bypass raising errors on `any` type
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        // "noEmit": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "jsx": "react",
+        "paths": {
+            "@*": ["resources/js*"],
+            "@helpers*": ["resources/js/utils/helpers*"],
+            "@hooks*": ["resources/js/utils/hooks*"],
+            "@hocs*": ["resources/js/utils/hocs*"]
+        }
+    },
+
+    "include": ["resources/js/**/*"] // Frontend paths pattern
+}

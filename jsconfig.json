@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"target": "es2015",
+		"jsx": "react",
+		"baseUrl": ".",
+		"paths": {
+			"@*": ["src*"],
+			"@helpers*": ["src/utils/helpers*"],
+			"@hooks*": ["src/utils/hooks*"],
+			"@hocs*": ["src/utils/hocs*"]
+		}
+	}
+}

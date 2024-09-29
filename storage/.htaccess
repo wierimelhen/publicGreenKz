@@ -1,0 +1,4 @@
+<FilesMatch "\\.(png|shtml|phtml|php)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

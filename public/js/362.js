@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[362],{8362:(e,n,t)=>{t.r(n),t.d(n,{default:()=>c});var u=t(7294),r=t(4309),s=t(5893);const c=function(){var e=(0,r.s0)();return u.useEffect((function(){e("/tree/add")}),[]),(0,s.jsx)(s.Fragment,{children:null})}}}]);
