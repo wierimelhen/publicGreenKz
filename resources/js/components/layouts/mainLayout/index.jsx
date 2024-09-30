@@ -11,6 +11,7 @@ import Fab from "@mui/material/Fab";
 // Icons
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
+import Header from "@/components/header";
 function FabButton() {
     return (
         <Fab size="small" aria-label="scroll back to top" color="primary">
@@ -26,7 +27,7 @@ function MainLayout({ container = "lg", pb = true }) {
     return (
         <>
             <Box display="flex" minHeight="100vh" flexDirection="column">
-                {/* <Header /> */}
+                <Header />
                 <Container
                     maxWidth={container}
                     component="main"

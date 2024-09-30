@@ -10,6 +10,7 @@ import StoreProvider from "@/store";
 // utils
 import Router from "@/utils/routes";
 import Box from "@mui/material/Box";
+import background from '@/assets/paper3.png'
 
 function ReactApp() {
     return (
@@ -18,9 +19,14 @@ function ReactApp() {
                 <HashRouter>
                     <Box
                         sx={{
-                            // backgroundImage: `url(${logo})`,
-                            background:
-                                "radial-gradient(circle, rgba(121,96,36,1) 18%, rgba(76,61,30,1) 100%)",
+                            backgroundImage: `url(${background})`,
+                            backgroundColor: "#183132",
+                                backgroundSize: "100% 100%",
+                                backgroundRepeat: "no-repeat",
+                                backgroundPositionX: "center",
+                                // backgroundPositionY: "10vh",
+                                width: "100%",
+                                // overflow: "auto",
                         }}
                     >
                         <Router />
