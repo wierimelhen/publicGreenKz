@@ -16,6 +16,8 @@ class CreateParkContractorsTable extends Migration
             $table->foreign('contractor_id')->references('id')->on('contractors');
             $table -> string('availability', 55) -> nullable(true) -> default('enabled');
             $table->text('responsibilities')->nullable(); // обязанности подрядчика в парке
+            $table->date('start_date')-> nullable(true);
+            $table->date('end_date')-> nullable(true);
             $table->timestamps();
         });
     }
