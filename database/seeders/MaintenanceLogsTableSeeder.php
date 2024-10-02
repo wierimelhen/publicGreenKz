@@ -8,7 +8,7 @@ class MaintenanceLogsTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('maintenance')->insert([
+        DB::table('maintenances')->insert([
             [
                 'park_id' => 1,
                 'contractor_id' => 1,
