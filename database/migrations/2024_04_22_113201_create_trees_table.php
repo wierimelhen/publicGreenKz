@@ -41,7 +41,8 @@ class CreateTreesTable extends Migration
             $table->double('longitude')->nullable(true)->comment('Долгота');
             $table->double('latitude')->nullable(true)->comment('Широта');
 
-            $table->integer('city_id')->nullable(true)->comment('City');
+            $table->unsignedBigInteger('park_id');
+            $table->foreign('park_id')->references('id')->on('parks');
 
             $table -> string('availability', 55) -> nullable(true) -> default('enabled');
 
