@@ -26,13 +26,14 @@ function MainLayout({ container = "lg", pb = true }) {
 
     return (
         <>
-            <Box display="flex" minHeight="100vh" flexDirection="column">
+            <Box display="flex" minHeight="100vh" flexDirection="column" alignItems='center'>
                 <Header />
                 <Container
                     maxWidth={container}
                     component="main"
                     sx={{
                         flex: "1 0 auto",
+                        paddingBottom: '20%'
                     }}
                 >
                     {pageTransitions ? (

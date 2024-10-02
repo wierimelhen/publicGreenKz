@@ -10,7 +10,8 @@ import StoreProvider from "@/store";
 // utils
 import Router from "@/utils/routes";
 import Box from "@mui/material/Box";
-import background from '@/assets/paper3.png'
+import background from "@/assets/paper6.png";
+import background2 from "@/assets/paper2.png";
 
 function ReactApp() {
     return (
@@ -20,16 +21,31 @@ function ReactApp() {
                     <Box
                         sx={{
                             backgroundImage: `url(${background})`,
-                            backgroundColor: "#183132",
-                                backgroundSize: "100% 100%",
-                                backgroundRepeat: "no-repeat",
-                                backgroundPositionX: "center",
-                                // backgroundPositionY: "10vh",
-                                width: "100%",
-                                // overflow: "auto",
+                            backgroundSize: "100% 100%",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPositionX: "center",
+                            width: "100%",
+                            height: "100%",
                         }}
                     >
-                        <Router />
+                        {/* <Box
+                            sx={{
+                                backgroundImage: `url(${background2})`,
+                                backgroundSize: "cover",
+                                backgroundRepeat: "no-repeat",
+                                backgroundPositionX: "center",
+                                width: "90%",
+                                height: "95%",
+                                borderBottomLeftRadius: "10px",
+                                borderBottomRightRadius: "10px",
+                                margin: "auto",
+                                boxShadow: "3px 5px 20px 1px #141b27",
+                                borderRight: '3px solid #81735d',
+                                borderBottom: '3px solid #81735d'
+                            }}
+                        > */}
+                            <Router />
+                        {/* </Box> */}
                     </Box>
                 </HashRouter>
             </SnackbarProvider>

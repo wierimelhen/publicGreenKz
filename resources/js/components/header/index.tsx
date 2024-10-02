@@ -1,5 +1,6 @@
 import React from "react";
-import header from '@/assets/header.png'
+import styles_1 from '@/assets/css/tsx_style_2'
+import styles_2 from '@/assets/css/button_style'
 
 function Header() {
 
@@ -7,43 +8,10 @@ function Header() {
     return (
         <>
 
-            <div style={{
-                height: '10vh',
-                backgroundImage: `url(${header})`,
-                backgroundColor: "#183132",
-                    backgroundSize: "100% 100%",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPositionX: "center",
-                    width: "100%",
-                    boxShadow: '0px 5px 5px 2px rgba(0,0,0,0.76)',
-                    display: "flex",
-                    alignContent: "center",
-                    justifyContent: "center",
-                    alignItems: "center"
-            }}>
-                <div style={{
-                    height: '80%',
-                    width: '80%',
-                    display: "flex",
-                    alignContent: "center",
-                    justifyContent: "space-between",
-                    alignItems: "center"
-                }}>
-                <button style={{
-                      boxShadow: "inset 0px 3px 3px -1px #23395e",
-                      backgroundColor: "transparent",
-                      borderRadius: "13px",
-                      border: "1px solid #4a6794",
-                      display: "inline-block",
-                      cursor: "pointer",
-                      color: "#ffffff",
-                      fontFamily: "Arial",
-                      fontSize: "18px",
-                      padding: "8px 63px",
-                      textDecoration: "none",
-                      textShadow: "0px 0px 0px #263666"
-                }}>
-                    aasasdasd
+            <div style={styles_1.css_1}>
+                <div style={styles_2.css_1}>
+                <button style={styles_2.css_2}>
+                    E-dendra
                 </button>
                 </div>
             </div>
