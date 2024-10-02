@@ -13,11 +13,13 @@ class LogFromApp extends Migration
      */
     public function up()
     {
-            Schema::table('log_app', function (Blueprint $table) {
+        if (!Schema::hasTable('log_app')) {
+            Schema::create('log_app', function (Blueprint $table) {
                 $table->id();
                 $table->mediumText('data');
                 $table->timestamps();
             });
+        }
     }
 
     /**
