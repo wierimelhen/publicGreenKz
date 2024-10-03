@@ -3,10 +3,10 @@
   padding: 10px;
 position: relative;
 border-radius: 15px;
-background: url(../texture.png);
+background: url(../header.png);
 background-size: 100% 100%;
 background-repeat: space;
-/*box-shadow: 15px 5px 1px 8px #ffffff0d, 0px 0px 0px 8px #ffffff0d,inset 1px 2px 2px 2px #2f2c2c96;*/
+box-shadow:inset 1px 2px 2px 2px #2f2c2c96;
 }
 
 .box::before {
