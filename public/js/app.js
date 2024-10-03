@@ -18807,7 +18807,10 @@ function MainLayout(_ref) {
         component: "main",
         sx: {
           flex: "1 0 auto",
-          paddingBottom: '20%'
+          paddingBottom: '20%',
+          marginTop: '25px',
+          paddingLeft: '10% !important',
+          paddingRight: '10% !important'
         },
         children: pageTransitions ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_hocs_widthPageTransition__WEBPACK_IMPORTED_MODULE_1__["default"], {
           location: location.key,
@@ -19510,6 +19513,9 @@ __webpack_require__.r(__webpack_exports__);
 var Page404 = (0,_hocs_withLazyLoadably__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(function () {
   return __webpack_require__.e(/*! import() */ "resources_js_pages_errorPages_404_index_jsx").then(__webpack_require__.bind(__webpack_require__, /*! @/pages/errorPages/404 */ "./resources/js/pages/errorPages/404/index.jsx"));
 }));
+var ParkInfoPage = (0,_hocs_withLazyLoadably__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(function () {
+  return __webpack_require__.e(/*! import() */ "resources_js_pages_dashboardsPages_parkInfoPage_index_tsx").then(__webpack_require__.bind(__webpack_require__, /*! @/pages/dashboardsPages/parkInfoPage */ "./resources/js/pages/dashboardsPages/parkInfoPage/index.tsx"));
+}));
 var Dashboard1Page = (0,_hocs_withLazyLoadably__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(function () {
   return __webpack_require__.e(/*! import() */ "resources_js_pages_dashboardsPages_dashboard1_index_tsx").then(__webpack_require__.bind(__webpack_require__, /*! @/pages/dashboardsPages/dashboard1 */ "./resources/js/pages/dashboardsPages/dashboard1/index.tsx"));
 }));
@@ -19517,13 +19523,16 @@ function Router() {
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useNavigate)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_hocs_withScrollTopOnRouteChange__WEBPACK_IMPORTED_MODULE_1__["default"], {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Routes, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
         path: "/",
         element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_layouts_mainLayout__WEBPACK_IMPORTED_MODULE_3__["default"], {}),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
           index: true,
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Dashboard1Page, {})
-        })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+          path: "/info/*",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(ParkInfoPage, {})
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
         path: "*",
         element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Page404, {})
@@ -63162,7 +63171,7 @@ function combine (array, callback) {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_pages_errorPages_404_index_jsx":1,"resources_js_pages_dashboardsPages_dashboard1_index_tsx":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_pages_errorPages_404_index_jsx":1,"resources_js_pages_dashboardsPages_parkInfoPage_index_tsx":1,"resources_js_pages_dashboardsPages_dashboard1_index_tsx":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

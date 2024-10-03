@@ -1,7 +1,22 @@
-.mapWrapper {
-    display: flex;
-    margin: auto;
-    justify-content: center;
-    margin-top: 40px;
-    overflow: hidden;
+/* MyComponent.module.css */
+.box {
+  padding: 10px;
+position: relative;
+border-radius: 15px;
+background: url(../texture.png);
+background-size: 100% 100%;
+background-repeat: space;
+/*box-shadow: 15px 5px 1px 8px #ffffff0d, 0px 0px 0px 8px #ffffff0d,inset 1px 2px 2px 2px #2f2c2c96;*/
+}
+
+.box::before {
+  content: '';
+  position: absolute;
+  top: -10px; /* Смещение вверх */
+  left: -10px; /* Смещение влево */
+  right: -10px; /* Смещение вправо */
+  bottom: -10px; /* Смещение вниз */
+  border-radius: 25px;
+  box-shadow: 2px 2px 1px 0px #30303247, -1px -1px 1px 0px #f0f3c563;
+
 }

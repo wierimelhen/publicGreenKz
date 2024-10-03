@@ -33,7 +33,11 @@ function MainLayout({ container = "lg", pb = true }) {
                     component="main"
                     sx={{
                         flex: "1 0 auto",
-                        paddingBottom: '20%'
+                        paddingBottom: '20%',
+                        marginTop: '25px',
+                        paddingLeft: '10% !important',
+                        paddingRight: '10% !important',
+
                     }}
                 >
                     {pageTransitions ? (

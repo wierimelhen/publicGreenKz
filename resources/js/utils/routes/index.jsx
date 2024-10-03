@@ -8,6 +8,7 @@ import withLazyLoadably from "@hocs/withLazyLoadably";
 import MainLayout from "@/components/layouts/mainLayout";
 
 const Page404 = withLazyLoadably(lazy(() => import("@/pages/errorPages/404")));
+const ParkInfoPage = withLazyLoadably(lazy(() => import("@/pages/dashboardsPages/parkInfoPage")));
 
 const Dashboard1Page = withLazyLoadably(
     lazy(() => import("@/pages/dashboardsPages/dashboard1")),
@@ -21,7 +22,9 @@ function Router() {
             <Routes>
                 <Route path="/" element={<MainLayout />}>
                     <Route index element={<Dashboard1Page />} />
+                    <Route path="/info/*" element={<ParkInfoPage />} />
                 </Route>
+                 
                 <Route path="*" element={<Page404 />} />
             </Routes>
         </ScrollToTopOnRouteChange>
