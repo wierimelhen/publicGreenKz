@@ -26,7 +26,7 @@ function MainLayout({ container = "lg", pb = true }) {
 
     return (
         <>
-            <Box display="flex" minHeight="100vh" flexDirection="column" alignItems='center'>
+            <Box display="flex" minHeight="100vh" flexDirection="column" alignItems='center' height='100%'>
                 <Header />
                 <Container
                     maxWidth={container}
@@ -37,7 +37,8 @@ function MainLayout({ container = "lg", pb = true }) {
                         marginTop: '25px',
                         paddingLeft: '10% !important',
                         paddingRight: '10% !important',
-
+                        maxHeight: '80%',
+                        overflow: 'auto'
                     }}
                 >
                     {pageTransitions ? (
