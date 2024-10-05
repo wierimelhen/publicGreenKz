@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Qr_codes;
 use App\Models\Parks;
 
-class Qr_codesController extends Controller
+class QrController extends Controller
 {
     public function getParkByQrCode($code)
     {

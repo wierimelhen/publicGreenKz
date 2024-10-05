@@ -42,7 +42,7 @@ var __awaiter = undefined && undefined.__awaiter || function (thisArg, _argument
 };
 // api.greenkz.bikli.kz
 // 192.168.1.168:8084
-var REACT_APP_HOST = "api.greenkz.bikli.kz";
+var REACT_APP_HOST = "e-dendra.kz";
 var PROTOCOL = "https";
 var api = {
   // async login(data: FormData) {
@@ -67,7 +67,7 @@ var api = {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return fetch("".concat(PROTOCOL, "://").concat(REACT_APP_HOST, "/api/getDataPark"), {
+            return fetch("".concat(PROTOCOL, "://").concat(REACT_APP_HOST, "/api/parks-by-qr"), {
               method: "POST",
               body: data,
               headers: {

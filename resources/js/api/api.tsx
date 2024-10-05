@@ -1,6 +1,6 @@
 // api.greenkz.bikli.kz
 // 192.168.1.168:8084
-const REACT_APP_HOST = "api.greenkz.bikli.kz";
+const REACT_APP_HOST = "e-dendra.kz";
 const PROTOCOL = "https";
 
 const api = {
@@ -27,7 +27,7 @@ const api = {
 
     async getDataPark(data: FormData) {
         const response = await fetch(
-            `${PROTOCOL}://${REACT_APP_HOST}/api/getDataPark`,
+            `${PROTOCOL}://${REACT_APP_HOST}/api/parks-by-qr`,
             {
                 method: "POST",
                 body: data,
