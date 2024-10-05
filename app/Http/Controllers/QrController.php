@@ -48,7 +48,7 @@ class QrController extends Controller
         // Вернуть информацию о парке
         return response()->json([
             'park' => $park->name,
-            'city' => $park->city->city,
+            'city' => $park->city,
             'contractors' => $park->contractors_count,
             'trees' => $park->trees_count
         ]);
