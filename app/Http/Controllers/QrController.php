@@ -12,7 +12,7 @@ class QrController extends Controller
     public function getParkByQrCode(Request $request)
     {
         $validated = Validator::make($request->all(), [
-            'token' => ['required', 'string', 'max:16'],
+            'token' => ['required', 'string', 'max:20'],
         ]);
 
 
@@ -31,14 +31,14 @@ class QrController extends Controller
         $qrCode = Qr_codes::where('code', $token)->first();
 
         if (!$qrCode) {
-            return response()->json(['error' => 'QR code not found'], 404);
+            return response()->json(['error' => 'QR code not found']);
         }
 
         // Найти парк по ID парка, который связан с QR-кодом
         $park = Parks::with(['city', 'contractors', 'trees'])->where('id', $qrCode->park_id)->first();
 
         if (!$park) {
-            return response()->json(['error' => 'Park not found'], 404);
+            return response()->json(['error' => 'Park not found']);
         }
 
         // Вернуть информацию о парке
