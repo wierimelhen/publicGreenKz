@@ -28,7 +28,7 @@ Route::group([
 ], function ($router) {
     Route::post('/parks-by-qr/{code}', [QrController::class, 'getParkByQrCode']);
 });
-
+ Route::post('/parks-by-qr/{code}', [QrController::class, 'getParkByQrCode']);
 // Route::group(['middleware' => ['jwt.auth']], function () {
 //     Route::post('/onTreesForUserNoData', [TreeController::class, 'onTreesForUserNoData']);
 // });
