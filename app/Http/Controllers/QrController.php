@@ -28,14 +28,14 @@ class QrController extends Controller
         $validated = $validated->validated();
         $token = $validated['token'];
 
-        $qrCode = Qr_code::where('code', $token)->first();
+        $qrCode = Qr_codes::where('code', $token)->first();
 
         if (!$qrCode) {
             return response()->json(['error' => 'QR code not found'], 404);
         }
 
         // Найти парк по ID парка, который связан с QR-кодом
-        $park = Park::with(['city', 'contractors', 'trees'])->where('id', $qrCode->park_id)->first();
+        $park = Parks::with(['city', 'contractors', 'trees'])->where('id', $qrCode->park_id)->first();
 
         if (!$park) {
             return response()->json(['error' => 'Park not found'], 404);
