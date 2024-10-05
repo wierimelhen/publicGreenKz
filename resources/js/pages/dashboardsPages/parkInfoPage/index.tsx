@@ -2,9 +2,11 @@ import React from 'react';
 import api from "@/api/api";
 import { useParams } from 'react-router-dom';
 import styles from '@/assets/css/cssModule_1.module.css'
+import { useNavigate } from "react-router-dom";
 
 function ParkInfoPage() {
   const params = useParams();  // Захватывает параметры из URL
+    const navigate = useNavigate();
 
   const getDataPark = async () => {
 
@@ -13,6 +15,10 @@ function ParkInfoPage() {
 
     const resp = await api.getDataPark(formData);
     console.log(resp)
+
+    if (resp.error) {
+      navigate('/404/qr-code')
+    }
 };
 
     React.useEffect(() => {

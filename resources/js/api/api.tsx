@@ -1,7 +1,8 @@
-// api.greenkz.bikli.kz
-// 192.168.1.168:8084
-const REACT_APP_HOST = "e-dendra.kz";
-const PROTOCOL = "https";
+// const REACT_APP_HOST = "e-dendra.kz";
+// const PROTOCOL = "https";
+
+const REACT_APP_HOST = "192.168.1.168:8088";
+const PROTOCOL = "http";
 
 const api = {
     // async login(data: FormData) {

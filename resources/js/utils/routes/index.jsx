@@ -23,9 +23,12 @@ function Router() {
                 <Route path="/" element={<MainLayout />}>
                     <Route index element={<Dashboard1Page />} />
                     <Route path="/info/*" element={<ParkInfoPage />} />
+                    
+                    <Route path="*" element={<Page404 />} />
+                    <Route path="404/qr-code" element={<Page404 />} />
                 </Route>
                  
-                <Route path="*" element={<Page404 />} />
+                
             </Routes>
         </ScrollToTopOnRouteChange>
     );
