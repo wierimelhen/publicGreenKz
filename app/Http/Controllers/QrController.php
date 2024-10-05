@@ -35,8 +35,11 @@ class QrController extends Controller
         }
 
         // Найти парк по ID парка, который связан с QR-кодом
-        $park = Parks::with(['city'])
-        ->withCount('contractors', 'trees')->where('id', $qrCode->park_id)->first();
+        $park = Parks::select('name')
+        ->with(['city:name'])
+        ->withCount('contractors', 'trees')
+        ->where('id', $qrCode->park_id)
+        ->first();
 
         if (!$park) {
             return response()->json(['error' => 'Park not found']);
@@ -44,10 +47,10 @@ class QrController extends Controller
 
         // Вернуть информацию о парке
         return response()->json([
-            'park' => $park,
-            'city' => $park->city,
-            'contractors' => $park->contractors,
-            'trees' => $park->trees
+            'park' => $park->name,
+            'city' => $park->city->name,
+            'contractors' => $park->contractors_count,
+            'trees' => $park->trees_count
         ]);
     }
 }
