@@ -13,7 +13,7 @@ class QrController extends Controller
     {
         $validated = Validator::make($request->all(), [
             'token' => ['required', 'string', 'max:16'],
-        ], $messages);
+        ]);
 
 
         if ($validated->fails()) {
