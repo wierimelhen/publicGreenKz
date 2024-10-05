@@ -36,7 +36,7 @@ class QrController extends Controller
 
         // Найти парк по ID парка, который связан с QR-кодом
         $park = Parks::select('name')
-        ->with(['city:city'])
+        ->with(['city'])
         ->withCount('contractors', 'trees')
         ->where('id', $qrCode->park_id)
         ->first();
