@@ -5,13 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Qr_codes;
 use App\Models\Parks;
+use Illuminate\Support\Facades\Validator;
 
 class QrController extends Controller
 {
-    public function getParkByQrCode($code)
+    public function getParkByQrCode(Request $request)
     {
-        // Найти запись QR-кода
-        $qrCode = Qr_code::where('code', $code)->first();
+        $validated = Validator::make($request->all(), [
+            'token' => ['required', 'string', 'max:16'],
+        ], $messages);
+
+
+        if ($validated->fails()) {
+            return response()->json([
+                'response' => [
+                    'message' => 'Ошибка валидации',
+                    'errors' => $validated->errors()
+                ]
+            ]);
+        }
+
+        $validated = $validated->validated();
+        $token = $validated['token'];
+
+        $qrCode = Qr_code::where('code', $token)->first();
 
         if (!$qrCode) {
             return response()->json(['error' => 'QR code not found'], 404);
