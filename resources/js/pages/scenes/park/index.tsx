@@ -1,91 +1,88 @@
-import React, { Suspense } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
-import { GLTF } from 'three-stdlib'; // Импортируйте GLTF из three-stdlib
-import { TextureLoader } from 'three';
-import grassTexture from '/scenes/screenshot.21.jpg'; // пример импорта текстуры
+import { OrbitControls, Stats, useGLTF } from '@react-three/drei';
+import * as THREE from 'three';
+import { Matrix4 } from 'three';
 
-// Компонент для загрузки модели дома
-function HouseModel() {
-  const { scene } = useGLTF('/scenes/building/scene.gltf') as GLTF;
+// Загрузка модели дерева
+const SuzanneModel = () => {
+  const { nodes } = useGLTF('/scenes/tree/tree.gltf'); // Загружаем модель дерева
+  console.log(nodes)
+  const treeMesh = nodes.AM113_063_Tilia01 as THREE.Mesh;
+  const croneMesh = nodes.AM113_063_Tilia01_1 as THREE.Mesh;
+  const data = 
+  {geometry: treeMesh.geometry, material: treeMesh.material,
+geometry_2: croneMesh.geometry, material_2: croneMesh.material}
 
-  return <primitive object={scene} scale={[0.5, 0.5, 0.5]} />;
-}
-
-// Компонент для загрузки модели дерева
-function TreeModel() {
-  const { scene } = useGLTF('/scenes/tree/scene.gltf') as GLTF;
-  return <primitive object={scene} scale={[0.01, 0.01, 0.01]} />;
-}
-
-// Генерация случайных позиций для деревьев
-const generateRandomPositions = (count: number, areaSize: number): [number, number, number][] => {
-  const positions: [number, number, number][] = [];
-  for (let i = 0; i < count; i++) {
-    const x = Math.random() * areaSize - areaSize / 2; // Генерация случайной позиции по оси X
-    const z = Math.random() * areaSize - areaSize / 2; // Генерация случайной позиции по оси Z
-    positions.push([x, 0, z] as [number, number, number]); // Позиции в формате [x, y, z]
-  }
-  return positions;
+  return treeMesh.geometry ? data : undefined;
 };
+// Интерфейс для пропсов компонента InstancedMesh
+interface Props {
+  count: number;
+}
 
-// Основная сцена
-const Scene: React.FC = () => {
-  const treePositions = generateRandomPositions(1500, 100); // 1500 деревьев в области 100x100
+const InstancedMesh = (props: Props) => {
+  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const matrix = useMemo(() => new Matrix4(), []);
+
+  // Функция для рандомизации матриц
+  const randomizeMatrix = useMemo(() => {
+    const position = new THREE.Vector3();
+    const quaternion = new THREE.Quaternion();
+    const scale = new THREE.Vector3();
+    return (matrix: THREE.Matrix4) => {
+      position.set(Math.random() * 400 - 200, 0, Math.random() * 400 - 200);
+      scale.setScalar(1); // Можем поменять масштаб при необходимости
+      matrix.compose(position, quaternion, scale);
+    };
+  }, []);
+
+  // Загружаем геометрию и материал из модели дерева
+  const geometry = SuzanneModel()?.geometry
+  const material = SuzanneModel()?.material;
+
+  const geometry_2 = SuzanneModel()?.geometry_2
+  const material_2 = SuzanneModel()?.material_2;
+  // const material = new THREE.MeshNormalMaterial(); // Или материал из GLTF, если он есть
+
+  useEffect(() => {
+    if (meshRef.current && geometry) {
+      for (let i = 0; i < props.count; i++) {
+        randomizeMatrix(matrix);
+        meshRef.current.setMatrixAt(i, matrix);
+      }
+      meshRef.current.instanceMatrix.needsUpdate = true;
+    }
+  }, [props.count, randomizeMatrix, matrix, geometry]);
 
   return (
-    <Canvas
-      shadows
-      camera={{ position: [5, 5, 5], fov: 50 }}
-    >
-      {/* Управление камерой */}
-      <OrbitControls />
-
-      {/* Источник света */}
-      <ambientLight intensity={0.4} />
-      <directionalLight 
-        position={[10, 10, 5]} 
-        intensity={1.5} 
-        castShadow 
-      />
-      
-      {/* Плоскость земли */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color="#e0e0e0" />
-      </mesh>
-
-      {/* Домик */}
-      <Suspense fallback={null}>
-        <HouseModel />
-      </Suspense>
-
-      {/* Деревья */}
-      <Suspense fallback={null}>
-        {treePositions.map((position, index) => (
-    <mesh key={index} position={position}>
-      <cylinderGeometry args={[0.5, 0.5, 5, 32]} />
-      <meshStandardMaterial color="green" />
-    </mesh>
-        ))}
-      </Suspense>
-
-      {/* Столбы */}
-      <mesh position={[-3, 0, 3]}>
-        <cylinderGeometry args={[0.2, 0.2, 7, 32]} />
-        <meshStandardMaterial color="brown" />
-      </mesh>
-      <mesh position={[3, 0, -3]}>
-        <cylinderGeometry args={[0.2, 0.2, 7, 32]} />
-        <meshStandardMaterial color="brown" />
-      </mesh>
-
-      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial map={new TextureLoader().load(grassTexture)} />
-      </mesh>
-    </Canvas>
+    <instancedMesh
+      ref={meshRef}
+      args={[geometry, material, props.count]} // Используем загруженную геометрию и материал
+    />
   );
 };
 
-export default Scene;
+const Scene = () => {
+  return (
+    <>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} />
+      <InstancedMesh count={3000} />
+      <OrbitControls autoRotate />
+    </>
+  );
+};
+
+const ThreeScene = () => {
+  return (
+    <div style={{ width: '60vw', height: '60vh', background: '#fff' }}>
+      <Canvas camera={{ position: [0, 0, 50] }}>
+        <Stats />
+        <Scene />
+      </Canvas>
+    </div>
+  );
+};
+
+export default ThreeScene;

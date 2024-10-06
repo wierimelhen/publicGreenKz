@@ -296,6 +296,93 @@ const OrbitControls = /* @__PURE__ */react__WEBPACK_IMPORTED_MODULE_1__.forwardR
 
 /***/ }),
 
+/***/ "./node_modules/@react-three/drei/core/Stats.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@react-three/drei/core/Stats.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Stats: () => (/* binding */ Stats)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _react_three_fiber__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @react-three/fiber */ "./node_modules/@react-three/fiber/dist/events-321b05fb.esm.js");
+/* harmony import */ var stats_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! stats.js */ "./node_modules/stats.js/build/stats.min.js");
+/* harmony import */ var stats_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(stats_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_useEffectfulState_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/useEffectfulState.js */ "./node_modules/@react-three/drei/helpers/useEffectfulState.js");
+
+
+
+
+
+function Stats({
+  showPanel = 0,
+  className,
+  parent
+}) {
+  const stats = (0,_helpers_useEffectfulState_js__WEBPACK_IMPORTED_MODULE_2__.useEffectfulState)(() => new (stats_js__WEBPACK_IMPORTED_MODULE_1___default())(), []);
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
+    if (stats) {
+      const node = parent && parent.current || document.body;
+      stats.showPanel(showPanel);
+      node == null || node.appendChild(stats.dom);
+      const classNames = (className !== null && className !== void 0 ? className : '').split(' ').filter(cls => cls);
+      if (classNames.length) stats.dom.classList.add(...classNames);
+      const begin = (0,_react_three_fiber__WEBPACK_IMPORTED_MODULE_3__.o)(() => stats.begin());
+      const end = (0,_react_three_fiber__WEBPACK_IMPORTED_MODULE_3__.p)(() => stats.end());
+      return () => {
+        if (classNames.length) stats.dom.classList.remove(...classNames);
+        node == null || node.removeChild(stats.dom);
+        begin();
+        end();
+      };
+    }
+  }, [parent, stats, className, showPanel]);
+  return null;
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@react-three/drei/helpers/useEffectfulState.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@react-three/drei/helpers/useEffectfulState.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useEffectfulState: () => (/* binding */ useEffectfulState)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function call(ref, value) {
+  if (typeof ref === 'function') ref(value);else if (ref != null) ref.current = value;
+}
+function useEffectfulState(fn, deps = [], cb) {
+  const [state, set] = react__WEBPACK_IMPORTED_MODULE_0__.useState();
+  react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect(() => {
+    const value = fn();
+    set(value);
+    call(cb, value);
+    return () => call(cb, null);
+  }, deps);
+  return state;
+}
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@react-three/fiber/dist/events-321b05fb.esm.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/@react-three/fiber/dist/events-321b05fb.esm.js ***!
@@ -3776,101 +3863,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _react_three_fiber__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @react-three/fiber */ "./node_modules/@react-three/fiber/dist/react-three-fiber.esm.js");
-/* harmony import */ var _react_three_drei__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @react-three/drei */ "./node_modules/@react-three/drei/core/Gltf.js");
-/* harmony import */ var _react_three_drei__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @react-three/drei */ "./node_modules/@react-three/drei/core/OrbitControls.js");
-/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-/* harmony import */ var _scenes_screenshot_21_jpg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../scenes/screenshot.21.jpg */ "./public/scenes/screenshot.21.jpg");
+/* harmony import */ var _react_three_fiber__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @react-three/fiber */ "./node_modules/@react-three/fiber/dist/react-three-fiber.esm.js");
+/* harmony import */ var _react_three_drei__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @react-three/drei */ "./node_modules/@react-three/drei/core/Gltf.js");
+/* harmony import */ var _react_three_drei__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @react-three/drei */ "./node_modules/@react-three/drei/core/OrbitControls.js");
+/* harmony import */ var _react_three_drei__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @react-three/drei */ "./node_modules/@react-three/drei/core/Stats.js");
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 
 
 
 
- // пример импорта текстуры
-// Компонент для загрузки модели дома
-function HouseModel() {
-  var _useGLTF = (0,_react_three_drei__WEBPACK_IMPORTED_MODULE_2__.useGLTF)('/scenes/building/scene.gltf'),
-    scene = _useGLTF.scene;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("primitive", {
-    object: scene,
-    scale: [0.5, 0.5, 0.5]
-  });
-}
-// Компонент для загрузки модели дерева
-function TreeModel() {
-  var _useGLTF2 = (0,_react_three_drei__WEBPACK_IMPORTED_MODULE_2__.useGLTF)('/scenes/tree/scene.gltf'),
-    scene = _useGLTF2.scene;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("primitive", {
-    object: scene,
-    scale: [0.01, 0.01, 0.01]
-  });
-}
-// Генерация случайных позиций для деревьев
-var generateRandomPositions = function generateRandomPositions(count, areaSize) {
-  var positions = [];
-  for (var i = 0; i < count; i++) {
-    var x = Math.random() * areaSize - areaSize / 2; // Генерация случайной позиции по оси X
-    var z = Math.random() * areaSize - areaSize / 2; // Генерация случайной позиции по оси Z
-    positions.push([x, 0, z]); // Позиции в формате [x, y, z]
-  }
-  return positions;
+
+// Загрузка модели дерева
+var SuzanneModel = function SuzanneModel() {
+  var _useGLTF = (0,_react_three_drei__WEBPACK_IMPORTED_MODULE_1__.useGLTF)('/scenes/tree/tree.gltf'),
+    nodes = _useGLTF.nodes; // Загружаем модель дерева
+  console.log(nodes);
+  var treeMesh = nodes.AM113_063_Tilia01;
+  var croneMesh = nodes.AM113_063_Tilia01_1;
+  var data = {
+    geometry: treeMesh.geometry,
+    material: treeMesh.material,
+    geometry_2: croneMesh.geometry,
+    material_2: croneMesh.material
+  };
+  return treeMesh.geometry ? data : undefined;
 };
-// Основная сцена
-var Scene = function Scene() {
-  var treePositions = generateRandomPositions(1500, 100); // 1500 деревьев в области 100x100
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_react_three_fiber__WEBPACK_IMPORTED_MODULE_3__.Canvas, {
-    shadows: true,
-    camera: {
-      position: [5, 5, 5],
-      fov: 50
+var InstancedMesh = function InstancedMesh(props) {
+  var _a, _b, _c, _d;
+  var meshRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var matrix = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return new three__WEBPACK_IMPORTED_MODULE_2__.Matrix4();
+  }, []);
+  // Функция для рандомизации матриц
+  var randomizeMatrix = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    var position = new three__WEBPACK_IMPORTED_MODULE_2__.Vector3();
+    var quaternion = new three__WEBPACK_IMPORTED_MODULE_2__.Quaternion();
+    var scale = new three__WEBPACK_IMPORTED_MODULE_2__.Vector3();
+    return function (matrix) {
+      position.set(Math.random() * 400 - 200, 0, Math.random() * 400 - 200);
+      scale.setScalar(1); // Можем поменять масштаб при необходимости
+      matrix.compose(position, quaternion, scale);
+    };
+  }, []);
+  // Загружаем геометрию и материал из модели дерева
+  var geometry = (_a = SuzanneModel()) === null || _a === void 0 ? void 0 : _a.geometry;
+  var material = (_b = SuzanneModel()) === null || _b === void 0 ? void 0 : _b.material;
+  var geometry_2 = (_c = SuzanneModel()) === null || _c === void 0 ? void 0 : _c.geometry_2;
+  var material_2 = (_d = SuzanneModel()) === null || _d === void 0 ? void 0 : _d.material_2;
+  // const material = new THREE.MeshNormalMaterial(); // Или материал из GLTF, если он есть
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (meshRef.current && geometry) {
+      for (var i = 0; i < props.count; i++) {
+        randomizeMatrix(matrix);
+        meshRef.current.setMatrixAt(i, matrix);
+      }
+      meshRef.current.instanceMatrix.needsUpdate = true;
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_react_three_drei__WEBPACK_IMPORTED_MODULE_4__.OrbitControls, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ambientLight", {
-    intensity: 0.4
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("directionalLight", {
-    position: [10, 10, 5],
-    intensity: 1.5,
-    castShadow: true
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("mesh", {
-    rotation: [-Math.PI / 2, 0, 0],
-    receiveShadow: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("planeGeometry", {
-    args: [100, 100]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meshStandardMaterial", {
-    color: "#e0e0e0"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react__WEBPACK_IMPORTED_MODULE_0__.Suspense, {
-    fallback: null
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(HouseModel, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react__WEBPACK_IMPORTED_MODULE_0__.Suspense, {
-    fallback: null
-  }, treePositions.map(function (position, index) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("mesh", {
-      key: index,
-      position: position
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("cylinderGeometry", {
-      args: [0.5, 0.5, 5, 32]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meshStandardMaterial", {
-      color: "green"
-    }));
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("mesh", {
-    position: [-3, 0, 3]
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("cylinderGeometry", {
-    args: [0.2, 0.2, 7, 32]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meshStandardMaterial", {
-    color: "brown"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("mesh", {
-    position: [3, 0, -3]
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("cylinderGeometry", {
-    args: [0.2, 0.2, 7, 32]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meshStandardMaterial", {
-    color: "brown"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("mesh", {
-    rotation: [-Math.PI / 2, 0, 0],
-    receiveShadow: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("planeGeometry", {
-    args: [100, 100]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meshStandardMaterial", {
-    map: new three__WEBPACK_IMPORTED_MODULE_5__.TextureLoader().load(_scenes_screenshot_21_jpg__WEBPACK_IMPORTED_MODULE_1__["default"])
-  })));
+  }, [props.count, randomizeMatrix, matrix, geometry]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("instancedMesh", {
+    ref: meshRef,
+    args: [geometry, material, props.count]
+  });
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Scene);
+var Scene = function Scene() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ambientLight", {
+    intensity: 0.5
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("pointLight", {
+    position: [10, 10, 10]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(InstancedMesh, {
+    count: 3000
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_react_three_drei__WEBPACK_IMPORTED_MODULE_3__.OrbitControls, {
+    autoRotate: true
+  }));
+};
+var ThreeScene = function ThreeScene() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      width: '60vw',
+      height: '60vh',
+      background: '#fff'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_react_three_fiber__WEBPACK_IMPORTED_MODULE_4__.Canvas, {
+    camera: {
+      position: [0, 0, 50]
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_react_three_drei__WEBPACK_IMPORTED_MODULE_5__.Stats, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Scene, null)));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ThreeScene);
 
 /***/ }),
 
@@ -3951,21 +4030,6 @@ debounce.debounce = debounce;
 
 module.exports = debounce;
 
-
-/***/ }),
-
-/***/ "./public/scenes/screenshot.21.jpg":
-/*!*****************************************!*\
-  !*** ./public/scenes/screenshot.21.jpg ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/screenshot.21.jpg?c60b51e7f379fa3e3daa37564109105a");
 
 /***/ }),
 
@@ -26270,6 +26334,21 @@ if (
 if (false) {} else {
   module.exports = __webpack_require__(/*! ./cjs/scheduler.development.js */ "./node_modules/react-reconciler/node_modules/scheduler/cjs/scheduler.development.js");
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/stats.js/build/stats.min.js":
+/*!**************************************************!*\
+  !*** ./node_modules/stats.js/build/stats.min.js ***!
+  \**************************************************/
+/***/ (function(module) {
+
+// stats.js - http://github.com/mrdoob/stats.js
+(function(f,e){ true?module.exports=e():0})(this,function(){var f=function(){function e(a){c.appendChild(a.dom);return a}function u(a){for(var d=0;d<c.children.length;d++)c.children[d].style.display=d===a?"block":"none";l=a}var l=0,c=document.createElement("div");c.style.cssText="position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000";c.addEventListener("click",function(a){a.preventDefault();
+u(++l%c.children.length)},!1);var k=(performance||Date).now(),g=k,a=0,r=e(new f.Panel("FPS","#0ff","#002")),h=e(new f.Panel("MS","#0f0","#020"));if(self.performance&&self.performance.memory)var t=e(new f.Panel("MB","#f08","#201"));u(0);return{REVISION:16,dom:c,addPanel:e,showPanel:u,begin:function(){k=(performance||Date).now()},end:function(){a++;var c=(performance||Date).now();h.update(c-k,200);if(c>g+1E3&&(r.update(1E3*a/(c-g),100),g=c,a=0,t)){var d=performance.memory;t.update(d.usedJSHeapSize/
+1048576,d.jsHeapSizeLimit/1048576)}return c},update:function(){k=this.end()},domElement:c,setMode:u}};f.Panel=function(e,f,l){var c=Infinity,k=0,g=Math.round,a=g(window.devicePixelRatio||1),r=80*a,h=48*a,t=3*a,v=2*a,d=3*a,m=15*a,n=74*a,p=30*a,q=document.createElement("canvas");q.width=r;q.height=h;q.style.cssText="width:80px;height:48px";var b=q.getContext("2d");b.font="bold "+9*a+"px Helvetica,Arial,sans-serif";b.textBaseline="top";b.fillStyle=l;b.fillRect(0,0,r,h);b.fillStyle=f;b.fillText(e,t,v);
+b.fillRect(d,m,n,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d,m,n,p);return{dom:q,update:function(h,w){c=Math.min(c,h);k=Math.max(k,h);b.fillStyle=l;b.globalAlpha=1;b.fillRect(0,0,r,m);b.fillStyle=f;b.fillText(g(h)+" "+e+" ("+g(c)+"-"+g(k)+")",t,v);b.drawImage(q,d+a,m,n-a,p,d,m,n-a,p);b.fillRect(d+n-a,m,a,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d+n-a,m,a,g((1-h/w)*p))}}};return f});
 
 
 /***/ }),
