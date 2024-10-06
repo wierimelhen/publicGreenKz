@@ -1,0 +1,11 @@
+Model Information:
+* title:	Tree G&H
+* source:	https://sketchfab.com/3d-models/tree-gh-d535b29a46e34946971d81d0fe1e0202
+* author:	MikeDragneel (https://sketchfab.com/MikeDragneel)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Tree G&H" (https://sketchfab.com/3d-models/tree-gh-d535b29a46e34946971d81d0fe1e0202) by MikeDragneel (https://sketchfab.com/MikeDragneel) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

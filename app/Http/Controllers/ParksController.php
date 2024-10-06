@@ -8,7 +8,7 @@ class ParksController extends Controller
 {
     public function city()
     {
-        return $this->belongsTo(City::class)->select(['city']); // Указываем нужные столбцы;
+        return $this->belongsTo(City::class, 'city_id'); // Указываем нужные столбцы;
     }
 
     public function contractors()

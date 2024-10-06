@@ -1,24 +1,20 @@
 import "@/assets/css/style.css";
-
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { HashRouter } from "react-router-dom";
 
-// moduls
+// модули
 import { Provider as SnackbarProvider } from "@/components/snackbar";
-import StoreProvider from "@/store";
-// utils
+// утилиты
 import Router from "@/utils/routes";
-import Box from "@mui/material/Box";
 import background from "@/assets/paper6.png";
 
 function ReactApp() {
     return (
-        <StoreProvider>
             <SnackbarProvider autoHideDuration={1000}>
                 <HashRouter>
-                    <Box
-                        sx={{
+                    <div
+                        style={{
                             backgroundImage: `url(${background})`,
                             backgroundSize: "100% 100%",
                             backgroundRepeat: "no-repeat",
@@ -27,16 +23,11 @@ function ReactApp() {
                             height: "100%",
                         }}
                     >
-                            <Router />
-                    </Box>
+                        <Router />
+                    </div>
                 </HashRouter>
             </SnackbarProvider>
-        </StoreProvider>
     );
 }
 
 export default ReactApp;
-
-if (document.getElementById("user")) {
-    ReactDOM.render(<ReactApp />, document.getElementById("user"));
-}

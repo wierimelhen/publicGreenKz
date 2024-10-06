@@ -5,7 +5,7 @@
 
     RewriteEngine On
 
-    RewriteRule .*\.(jpg|htm|txt)$ - [F,NC]
+    RewriteRule .*\.(htm|txt)$ - [F,NC]
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -20,4 +20,3 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
-

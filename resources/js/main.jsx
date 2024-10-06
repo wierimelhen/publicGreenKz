@@ -1,9 +1,16 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "./ReactApp";
+import ReactDOM from "react-dom/client";
+import ReactApp from "./ReactApp";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-);
+if (document.getElementById("user")) {
+    const rootElement = document.getElementById("user");
+    const root = ReactDOM.createRoot(rootElement);
+
+    root.render(
+        <React.StrictMode>
+        <ReactApp />
+    </React.StrictMode>
+    )
+    ;
+}
+

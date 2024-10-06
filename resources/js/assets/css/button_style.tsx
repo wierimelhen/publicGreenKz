@@ -1,6 +1,5 @@
 
 import button from '@/assets/texture_header.png'
-import { fontWeight } from '@mui/system';
 
 const StylesModule = {
 	ContentStyle: {},

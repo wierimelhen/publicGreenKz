@@ -4,3 +4,10 @@ export interface users {
     img: string;
     email: string;
 }
+
+export type responseData_1 = {
+    park: string;
+    address: string;
+    trees: number;
+    contractors: number;
+}

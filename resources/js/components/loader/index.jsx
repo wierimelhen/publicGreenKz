@@ -1,44 +1,49 @@
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import LinearProgress from '@mui/material/LinearProgress';
+import React from 'react';
 
 export function LogoLoader({ addSx, ...rest }) {
-	return (
-		<Card
-			sx={{
-				mx: {
-					xs: 1,
-					sm: 'auto',
-				},
-				my: 'auto',
-				width: {
-					xs: '100%',
-					sm: 'fit-content',
-				},
-				...addSx,
-			}}
-			{...rest}
-		>
-			<Stack direction="column" spacing={1}>
-				<Box
-					// component="img"
-					// src={logo}
-					// alt="Slim Logo"
-					width={{
-						xs: '30vw',
-						md: '15vw',
-					}}
-				/>
-				<LinearProgress />
-				<Typography my={1} textAlign="center" variant="caption">
-					Загрузка
-				</Typography>
-			</Stack>
-		</Card>
-	);
-}
+    const containerStyle = {
+        margin: 'auto',
+        maxWidth: 'fit-content',
+        width: '100%',
+        ...addSx,
+    };
 
+    const imageStyle = {
+        width: '30vw',
+        maxWidth: '100%',
+    };
+
+    const progressStyle = {
+        height: '4px',
+        backgroundColor: '#e0e0e0',
+        borderRadius: '4px',
+        overflow: 'hidden',
+        margin: '8px 0',
+    };
+
+    const progressBarStyle = {
+        height: '100%',
+        width: '100%', // You can control the loading progress here
+        backgroundColor: '#3f51b5', // Change the color as needed
+        transition: 'width 0.5s ease-in-out', // Add a smooth transition
+    };
+
+    return (
+        <div style={containerStyle} {...rest}>
+            <div style={imageStyle}>
+                {/* Uncomment and replace 'logo' with your logo source */}
+                {/* <img src={logo} alt="Slim Logo" style={imageStyle} /> */}
+            </div>
+            <div style={progressStyle}>
+                <div style={progressBarStyle} />
+            </div>
+            <div style={{ textAlign: 'center', marginTop: '8px' }}>
+                <span style={{ fontSize: '12px', color: '#757575' }}>
+                    Загрузка
+                </span>
+            </div>
+        </div>
+    );
+}
 
 export default LogoLoader;

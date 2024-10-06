@@ -1,38 +1,52 @@
 import { forwardRef } from 'react';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
+function Snackbar(props) {
+    const { message, severity, title, style, ...alertProps } = props;
 
-function MuiSnackbar(props) {
-	const { message, severity, title, sx, alertProps } = props;
-	console.log(props);
-	return (
-		<Alert severity={severity} sx={{ boxShadow: 27, ...sx }} {...alertProps}>
-			<AlertTitle>{title}</AlertTitle>
-			{message}
-		</Alert>
-	);
+    const severityStyles = {
+        success: { backgroundColor: '#4caf50', color: '#fff' },
+        error: { backgroundColor: '#f44336', color: '#fff' },
+        warning: { backgroundColor: '#ff9800', color: '#fff' },
+        info: { backgroundColor: '#2196f3', color: '#fff' },
+    };
+
+    return (
+        <div
+            style={{
+                ...severityStyles[severity],
+                padding: '16px',
+                borderRadius: '4px',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+                marginBottom: '16px',
+                ...style,
+            }}
+            {...alertProps}
+        >
+            {title && <strong>{title}</strong>}
+            <div>{message}</div>
+        </div>
+    );
 }
 
-const MuiSnackbarVariant = forwardRef((props, ref) => (
-	<div ref={ref}>
-		<MuiSnackbar {...props} />
-	</div>
+const SnackbarVariant = forwardRef((props, ref) => (
+    <div ref={ref}>
+        <Snackbar {...props} />
+    </div>
 ));
 
 export function Provider({ children }) {
-	return (
-		<SnackbarProvider
-			maxSnack={3}
-			anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-			Components={{
-				muiSnackbar: MuiSnackbarVariant,
-			}}
-		>
-			{children}
-		</SnackbarProvider>
-	);
+    return (
+        <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+            Components={{
+                muiSnackbar: SnackbarVariant,
+            }}
+        >
+            {children}
+        </SnackbarProvider>
+    );
 }
 
 export default enqueueSnackbar;

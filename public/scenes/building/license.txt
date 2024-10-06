@@ -1,0 +1,11 @@
+Model Information:
+* title:	3D Building
+* source:	https://sketchfab.com/3d-models/3d-building-4bd676f8903b47ec877afed5f4dea473
+* author:	Sba Stuff (https://sketchfab.com/sbastuff)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "3D Building" (https://sketchfab.com/3d-models/3d-building-4bd676f8903b47ec877afed5f4dea473) by Sba Stuff (https://sketchfab.com/sbastuff) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

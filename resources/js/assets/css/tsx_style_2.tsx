@@ -1,5 +1,4 @@
 import header from "@/assets/header.png";
-import { positions } from "@mui/system";
 
 const StylesModule = {
     ContentStyle: {},
