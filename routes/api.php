@@ -28,7 +28,7 @@ Route::group([
 
 ], function ($router) {
     Route::post('/parks-by-qr', [QrController::class, 'getParkByQrCode']);
-    Route::post('/XYtrees', [TreeController::class, 'XYtrees']);
+    Route::post('/XYtrees', [TreeController::class, 'latLngToXY']);
 });
 
 // Route::group(['middleware' => ['jwt.auth']], function () {
