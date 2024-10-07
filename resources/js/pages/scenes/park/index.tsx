@@ -6,15 +6,18 @@ import { Matrix4 } from 'three';
 
 // Загрузка модели дерева
 const SuzanneModel = () => {
-  const { nodes } = useGLTF('/scenes/tree/tree.gltf'); // Загружаем модель дерева
-  console.log(nodes)
+  const { nodes } = useGLTF('/scenes/tree/tree.gltf');
+  
+  // Получаем ствол и крону как отдельные меши
   const treeMesh = nodes.AM113_063_Tilia01 as THREE.Mesh;
   const croneMesh = nodes.AM113_063_Tilia01_1 as THREE.Mesh;
-  const data = 
-  {geometry: treeMesh.geometry, material: treeMesh.material,
-geometry_2: croneMesh.geometry, material_2: croneMesh.material}
 
-  return treeMesh.geometry ? data : undefined;
+  return {
+    treeGeometry: treeMesh.geometry,
+    treeMaterial: treeMesh.material,
+    croneGeometry: croneMesh.geometry,
+    croneMaterial: croneMesh.material,
+  };
 };
 // Интерфейс для пропсов компонента InstancedMesh
 interface Props {
@@ -23,7 +26,9 @@ interface Props {
 
 const InstancedMesh = (props: Props) => {
   const meshRef = useRef<THREE.InstancedMesh>(null);
-  const matrix = useMemo(() => new Matrix4(), []);
+  const croneRef = useRef<THREE.InstancedMesh>(null);
+
+    const matrix = useMemo(() => new Matrix4(), []);
 
   // Функция для рандомизации матриц
   const randomizeMatrix = useMemo(() => {
@@ -38,28 +43,48 @@ const InstancedMesh = (props: Props) => {
   }, []);
 
   // Загружаем геометрию и материал из модели дерева
-  const geometry = SuzanneModel()?.geometry
-  const material = SuzanneModel()?.material;
+  const { treeGeometry, treeMaterial, croneGeometry, croneMaterial } = SuzanneModel();
 
-  const geometry_2 = SuzanneModel()?.geometry_2
-  const material_2 = SuzanneModel()?.material_2;
   // const material = new THREE.MeshNormalMaterial(); // Или материал из GLTF, если он есть
 
   useEffect(() => {
-    if (meshRef.current && geometry) {
+    if (meshRef.current && croneRef.current && treeGeometry && croneGeometry) {
       for (let i = 0; i < props.count; i++) {
         randomizeMatrix(matrix);
+        // Применяем матрицу к стволу
         meshRef.current.setMatrixAt(i, matrix);
+        // Применяем матрицу к кроне
+        croneRef.current.setMatrixAt(i, matrix);
       }
       meshRef.current.instanceMatrix.needsUpdate = true;
+      croneRef.current.instanceMatrix.needsUpdate = true;
     }
-  }, [props.count, randomizeMatrix, matrix, geometry]);
+  }, [props.count, randomizeMatrix, matrix, treeGeometry, croneGeometry]);
+
 
   return (
-    <instancedMesh
-      ref={meshRef}
-      args={[geometry, material, props.count]} // Используем загруженную геометрию и материал
-    />
+    <>
+      {/* Инстансируем ствол дерева */}
+      <instancedMesh
+        ref={meshRef}
+        args={[treeGeometry, treeMaterial, props.count]} // Используем загруженную геометрию и материал для ствола
+      />
+
+      {/* Инстансируем крону дерева */}
+      <instancedMesh
+        ref={croneRef}
+        args={[croneGeometry, croneMaterial, props.count]} // Используем загруженную геометрию и материал для кроны
+      />
+    </>
+  );
+};
+
+const Ground = () => {
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+      <planeGeometry args={[10000, 10000]} /> 
+      <meshBasicMaterial color="#5e9759" /> {/* Задаем цвет земли (зеленый, например) */}
+    </mesh>
   );
 };
 
@@ -69,15 +94,23 @@ const Scene = () => {
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} />
       <InstancedMesh count={3000} />
-      <OrbitControls autoRotate />
+      <Ground />
+      <OrbitControls         
+        autoRotate
+        minPolarAngle={Math.PI / 3}  // Ограничиваем минимальный угол опускания (60 градусов)
+        maxPolarAngle={Math.PI / 2.2} // Ограничиваем максимальный угол поднятия (примерно 82 градусов)
+        maxDistance={500}  // Максимальное отдаление камеры
+        minDistance={50}   // Минимальное приближение камеры
+        enablePan={false} // Отключаем панорамирование
+  />
     </>
   );
 };
 
 const ThreeScene = () => {
   return (
-    <div style={{ width: '60vw', height: '60vh', background: '#fff' }}>
-      <Canvas camera={{ position: [0, 0, 50] }}>
+    <div style={{ width: '60vw', height: '60vh', background: '#748f9b' }}>
+      <Canvas camera={{ position: [1, 1, 50] }}>
         <Stats />
         <Scene />
       </Canvas>

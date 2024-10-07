@@ -3876,21 +3876,20 @@ __webpack_require__.r(__webpack_exports__);
 // Загрузка модели дерева
 var SuzanneModel = function SuzanneModel() {
   var _useGLTF = (0,_react_three_drei__WEBPACK_IMPORTED_MODULE_1__.useGLTF)('/scenes/tree/tree.gltf'),
-    nodes = _useGLTF.nodes; // Загружаем модель дерева
-  console.log(nodes);
+    nodes = _useGLTF.nodes;
+  // Получаем ствол и крону как отдельные меши
   var treeMesh = nodes.AM113_063_Tilia01;
   var croneMesh = nodes.AM113_063_Tilia01_1;
-  var data = {
-    geometry: treeMesh.geometry,
-    material: treeMesh.material,
-    geometry_2: croneMesh.geometry,
-    material_2: croneMesh.material
+  return {
+    treeGeometry: treeMesh.geometry,
+    treeMaterial: treeMesh.material,
+    croneGeometry: croneMesh.geometry,
+    croneMaterial: croneMesh.material
   };
-  return treeMesh.geometry ? data : undefined;
 };
 var InstancedMesh = function InstancedMesh(props) {
-  var _a, _b, _c, _d;
   var meshRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var croneRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var matrix = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     return new three__WEBPACK_IMPORTED_MODULE_2__.Matrix4();
   }, []);
@@ -3906,24 +3905,42 @@ var InstancedMesh = function InstancedMesh(props) {
     };
   }, []);
   // Загружаем геометрию и материал из модели дерева
-  var geometry = (_a = SuzanneModel()) === null || _a === void 0 ? void 0 : _a.geometry;
-  var material = (_b = SuzanneModel()) === null || _b === void 0 ? void 0 : _b.material;
-  var geometry_2 = (_c = SuzanneModel()) === null || _c === void 0 ? void 0 : _c.geometry_2;
-  var material_2 = (_d = SuzanneModel()) === null || _d === void 0 ? void 0 : _d.material_2;
+  var _SuzanneModel = SuzanneModel(),
+    treeGeometry = _SuzanneModel.treeGeometry,
+    treeMaterial = _SuzanneModel.treeMaterial,
+    croneGeometry = _SuzanneModel.croneGeometry,
+    croneMaterial = _SuzanneModel.croneMaterial;
   // const material = new THREE.MeshNormalMaterial(); // Или материал из GLTF, если он есть
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (meshRef.current && geometry) {
+    if (meshRef.current && croneRef.current && treeGeometry && croneGeometry) {
       for (var i = 0; i < props.count; i++) {
         randomizeMatrix(matrix);
+        // Применяем матрицу к стволу
         meshRef.current.setMatrixAt(i, matrix);
+        // Применяем матрицу к кроне
+        croneRef.current.setMatrixAt(i, matrix);
       }
       meshRef.current.instanceMatrix.needsUpdate = true;
+      croneRef.current.instanceMatrix.needsUpdate = true;
     }
-  }, [props.count, randomizeMatrix, matrix, geometry]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("instancedMesh", {
+  }, [props.count, randomizeMatrix, matrix, treeGeometry, croneGeometry]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("instancedMesh", {
     ref: meshRef,
-    args: [geometry, material, props.count]
-  });
+    args: [treeGeometry, treeMaterial, props.count]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("instancedMesh", {
+    ref: croneRef,
+    args: [croneGeometry, croneMaterial, props.count]
+  }));
+};
+var Ground = function Ground() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("mesh", {
+    rotation: [-Math.PI / 2, 0, 0],
+    position: [0, 0, 0]
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("planeGeometry", {
+    args: [10000, 10000]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meshBasicMaterial", {
+    color: "#5e9759"
+  }), " ");
 };
 var Scene = function Scene() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ambientLight", {
@@ -3932,8 +3949,13 @@ var Scene = function Scene() {
     position: [10, 10, 10]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(InstancedMesh, {
     count: 3000
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_react_three_drei__WEBPACK_IMPORTED_MODULE_3__.OrbitControls, {
-    autoRotate: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Ground, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_react_three_drei__WEBPACK_IMPORTED_MODULE_3__.OrbitControls, {
+    autoRotate: true,
+    minPolarAngle: Math.PI / 3,
+    maxPolarAngle: Math.PI / 2.2,
+    maxDistance: 500,
+    minDistance: 50,
+    enablePan: false
   }));
 };
 var ThreeScene = function ThreeScene() {
@@ -3941,11 +3963,11 @@ var ThreeScene = function ThreeScene() {
     style: {
       width: '60vw',
       height: '60vh',
-      background: '#fff'
+      background: '#748f9b'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_react_three_fiber__WEBPACK_IMPORTED_MODULE_4__.Canvas, {
     camera: {
-      position: [0, 0, 50]
+      position: [1, 1, 50]
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_react_three_drei__WEBPACK_IMPORTED_MODULE_5__.Stats, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Scene, null)));
 };
