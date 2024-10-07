@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\TelegramWebhookController;
+use Illuminate\Support\Facades\Validator;
 
 use DB;
 
@@ -30,9 +31,9 @@ class TreeController extends Controller
 
         if (is_null($user)) {
             return response()->json([
-                'response' => [
-                    'message' => 'Истек токен аутентификации. Необходимо выйти и снова авторизироваться',
-                ]
+            'response' => [
+                'message' => 'Истек токен аутентификации. Необходимо выйти и снова авторизироваться',
+            ]
             ]);
         }
 
@@ -74,11 +75,11 @@ class TreeController extends Controller
         $validated_data['city_id'] = $city_id;
 
         $options = [
-            'http' => [
-                'method' => 'POST',
-                'header' => 'Content-type: application/x-www-form-urlencoded',
-                'content' => http_build_query($validated_data),
-            ],
+        'http' => [
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'content' => http_build_query($validated_data),
+        ],
         ];
 
         $context = stream_context_create($options);
@@ -104,90 +105,68 @@ class TreeController extends Controller
         (new TelegramWebhookController)->TreeAddMessage($tree_id, $cityName, $cityCountTrees, $fio);
 
         return response()->json(['response' => $answer_succes]);
-
-
     }
 
-    public function onTreesForUserNoData()
+    public function latLngToXY()
     {
+        $trees = Tree::where('park_id', 1)->get();  // Получаем все деревья парка
 
-        $user = auth()->user();
-        $user_id = $user->id;
-        $user_for_msg = User::where('id', $user_id)->first();
-        $fio = $user_for_msg->second_name . ' ' . $user_for_msg->name;
+        // Минимальные и максимальные значения для нормализации
+        $minLat = $trees->min('latitude');
+        $maxLat = $trees->max('latitude');
+        $minLng = $trees->min('longitude');
+        $maxLng = $trees->max('longitude');
 
-        (new TelegramWebhookController)->MapUsedBySomeone($fio);
+        // Получаем общее количество деревьев
+        $totalTrees = $trees -> count();
+        $counter = 0;
 
-        $lastID = DB::table('log_tree_add')->orderBy('date_create', 'desc')->where('user_id', '=', $user_id)->pluck('tree_id')->first();
-        $lastIDLocations = DB::table('trees')->select('id', 'latitude', 'longitude')->where('id', '=', $lastID)->first();
+        foreach ($trees as $tree) {
+            [$x, $y] = $this->latLngToXYConv($tree->latitude, $tree->longitude, $minLat, $maxLat, $minLng, $maxLng);
 
-        $data = DB::table('trees')
-            ->select('trees.id', 'trees.latitude', 'trees.tree_species', 'trees.longitude', 'trees.trunk', 'trees.created_at', 'log_tree_add.user_id')
-            ->leftjoin('log_tree_add', 'trees.id', '=', 'log_tree_add.tree_id')
-            ->whereRaw("
-        (6371000 * acos(cos(radians(?)) * cos(radians(trees.latitude)) * cos(radians(trees.longitude) - radians(?)) + sin(radians(?)) * sin(radians(trees.latitude)))) <= ?
-    ", [$lastIDLocations->latitude, $lastIDLocations->longitude, $lastIDLocations->latitude, 2000])
-            ->get();
+            $tree->x = $x;
+            $tree->y = $y;
+            $tree->save();
 
-        $res_1 = [];
-
-        $date30 = Carbon::today()->subDays(50);
-        foreach ($data as $key_3 => $item_3) {
-            if (($item_3->trunk !== null) && ($item_3->tree_species !== 1)) {
-                if ($item_3->user_id == $user_id) {
-                    if ($item_3->id == $lastID) {
-                        $norma = 'hsl(2, 67%, 49%)';
-
-                        $data_o = new \stdClass();
-                        $data_o->hsl = $norma;
-                        $data_o->lat = $item_3->latitude;
-                        $data_o->lon = $item_3->longitude;
-                    } else {
-                        $norma = 'hsl(246, 100%, 50%)';
-
-                        $data_o = new \stdClass();
-                        $data_o->hsl = $norma;
-                        $data_o->lat = $item_3->latitude;
-                        $data_o->lon = $item_3->longitude;
-                    }
-                } else {
-                    if ($item_3->created_at > $date30) {
-
-                        $norma = 'hsl(120, 75%, 48%)';
-
-                        $data_o = new \stdClass();
-
-                        $data_o->hsl = $norma;
-                        $data_o->lat = $item_3->latitude;
-                        $data_o->lon = $item_3->longitude;
-
-                    } else {
-                        $norma = 'hsl(120, 26%, 22%)';
-
-                        $data_o = new \stdClass();
-                        $data_o->hsl = $norma;
-                        $data_o->lat = $item_3->latitude;
-                        $data_o->lon = $item_3->longitude;
-                    }
-                }
-                array_push($res_1, $data_o);
-            } else {
-
-                $norma = 'hsl(30, 8%, 48%)';
-
-                $data_o = new \stdClass();
-                $data_o->hsl = $norma;
-                $data_o->lat = $item_3->latitude;
-                $data_o->lon = $item_3->longitude;
-
-                array_push($res_1, $data_o);
-            }
-
-
+            $counter++;
+            // Выводим прогресс
         }
 
-        return response()->json(['response' => $res_1]);
+        echo "Normalization complete.\n";
     }
 
+    public function latLngToXYConv($lat, $lng, $minLat, $maxLat, $minLng, $maxLng)
+    {
+        // Преобразуем широту (lat) в диапазон от -500 до 500
+        $normalizedLat = ($lat - $minLat) / ($maxLat - $minLat) * 100 - 50;
 
+        // Преобразуем долготу (lng) в диапазон от -500 до 500
+        $normalizedLng = ($lng - $minLng) / ($maxLng - $minLng) * 100 - 50;
+
+        return [$normalizedLng, $normalizedLat];
+    }
+
+    public function XYtrees(Request $request)
+    {
+
+        $validated = Validator::make($request->all(), [
+            'park_id' => ['required', 'integer'],
+        ]);
+
+
+        if ($validated->fails()) {
+            return response()->json([
+                'response' => [
+                    'message' => 'Ошибка валидации',
+                    'errors' => $validated->errors()
+                ]
+            ]);
+        }
+
+        $validated = $validated->validated();
+
+        $trees = DB::table('trees')->select('x', 'y')->where('park_id', $validated['park_id'])->get();
+        
+        return response()->json(['response' => $trees]);
+    }
 }

@@ -46,7 +46,7 @@ function ParkInfoPage() {
         <h3>Самое молодое дерево:</h3>
       </div>
       <div className={styles.box}>
-        <h3>Организаций обслуживания: {parkData.contractors}</h3>
+        <h3>Организаций <br/> обслуживания: {parkData.contractors}</h3>
       </div>
     </>
   );

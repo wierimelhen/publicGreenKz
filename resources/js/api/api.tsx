@@ -1,8 +1,8 @@
-const REACT_APP_HOST = "e-dendra.kz";
-const PROTOCOL = "https";
+// const REACT_APP_HOST = "e-dendra.kz";
+// const PROTOCOL = "https";
 
-// const REACT_APP_HOST = "192.168.1.168:8088";
-// const PROTOCOL = "http";
+const REACT_APP_HOST = "192.168.1.168:8088";
+const PROTOCOL = "http";
 
 const api = {
     // async login(data: FormData) {
@@ -44,6 +44,25 @@ const api = {
 
         return jsonData;
     },
+
+    async getXYDataTrees(data: FormData) {
+        const response = await fetch(
+            `${PROTOCOL}://${REACT_APP_HOST}/api/XYtrees`,
+            {
+                method: "POST",
+                body: data,
+                headers: {
+                    Accept: "application/json",
+                    // "Content-Type": "application/json",
+                    // Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+                },
+            },
+        );
+
+        const jsonData = await response.json();
+
+        return jsonData;
+},
 
 
 };

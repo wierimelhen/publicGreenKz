@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\QrController;
+use App\Http\Controllers\TreeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::group([
 
 ], function ($router) {
     Route::post('/parks-by-qr', [QrController::class, 'getParkByQrCode']);
+    Route::post('/XYtrees', [TreeController::class, 'XYtrees']);
 });
 
 // Route::group(['middleware' => ['jwt.auth']], function () {
