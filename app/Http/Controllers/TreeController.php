@@ -133,7 +133,7 @@ class TreeController extends Controller
         }
 
         // echo "Normalization complete.\n";
-        return response()->json(['response' => []]);
+        return response()->json(['response' => $trees]);
     }
 
     public function latLngToXYConv($lat, $lng, $minLat, $maxLat, $minLng, $maxLng)
